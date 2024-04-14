@@ -1,17 +1,16 @@
-package solvers;
 /**
  * golfphysics
  */
 public class golfphysics implements MyFunction {
     public double[] ode(double[] x, double[] a, double[] dh){
         double[] dx=new double[x.length];
-        double g=9.8;
+        double g=9.81;
         
         dx[0]=x[2];
         dx[1]=x[3];
 
-        //precise the speed to 0.01 m/s
-        if (x[2]<0.01 && x[3]<0.01) {
+        //precise the speed to 0.001 m/s
+        if (x[2]<0.001 && x[3]<0.001) {
             x[2]=0;
             x[3]=0;
         }
@@ -28,8 +27,8 @@ public class golfphysics implements MyFunction {
                 dx[3]=-g*dh[1]-a[0]*g*dh[1]/(Math.sqrt(Math.pow(dh[0],2)+Math.pow(dh[1], 2)));
             }
         }else{
-            dx[2]=-g*dh[0]-a[0]*g*x[2]/(Math.sqrt(Math.pow(x[0],2)+Math.pow(x[1], 2)));
-            dx[3]=-g*dh[1]-a[0]*g*x[3]/(Math.sqrt(Math.pow(x[0],2)+Math.pow(x[1], 2)));
+            dx[2]=-g*dh[0]-a[0]*g*x[2]/(Math.sqrt(Math.pow(x[2],2)+Math.pow(x[3], 2)));
+            dx[3]=-g*dh[1]-a[0]*g*x[3]/(Math.sqrt(Math.pow(x[2],2)+Math.pow(x[3], 2)));
 
         }
 

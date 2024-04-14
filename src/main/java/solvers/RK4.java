@@ -1,4 +1,3 @@
-package solvers;
 public class RK4 implements MySolver{
     public boolean nextstep(MyFunction f, double[] x,double[] a, double[] dh,double dt){
         boolean equillium = true;
