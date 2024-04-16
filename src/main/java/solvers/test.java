@@ -15,9 +15,9 @@ public class test {
         double[] hole={33.5,9.97};
         double r=0.15;
 
-        ArrayList<double[]> xpath=g.shoot(new RK4(), x, a, dt, hole,r,"maps/map.png");
+        ArrayList<double[]> xpath=g.shoot(new RK4(), x, a, dt, hole,r,"../map.png");
         System.out.println(Arrays.toString(xpath.get(0)));
-        g.plotTrajectory("maps/map.png", "maps/outplot.png", xpath);
+        g.plotTrajectory("../map.png", "output/outplot.png", xpath);
         System.out.println(xpath.getLast()[0]+" "+xpath.getLast()[1]);
         System.out.println(g.getMinDistance());
 

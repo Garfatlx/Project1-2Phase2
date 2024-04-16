@@ -4,6 +4,8 @@ import java.util.List;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
+
 import javax.imageio.ImageIO;
 import java.awt.Color;
 
@@ -66,7 +68,7 @@ public class golfgame {
         try {
             File input_file = new File(mappath);
             image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-            image = ImageIO.read(input_file);
+            image = ImageIO.read(getClass().getResource(mappath));
             width=image.getWidth();
             height=image.getHeight();
             System.out.println("map readed");
@@ -104,13 +106,14 @@ public class golfgame {
         try {
             File input_file = new File(sourceMap);
             image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-            image = ImageIO.read(input_file);
+            image = ImageIO.read(getClass().getResource(sourceMap));
             width=image.getWidth();
             height=image.getHeight();
             System.out.println("map readed to plot");
             for (int i = 0; i < trajectory.size(); i++) {
                 image.setRGB((int) Math.floor(trajectory.get(i)[0]*10), (int) Math.floor(trajectory.get(i)[1]*10), Color.RED.getRGB());
             }
+            
             File outputfile=new File(plotMap);
             ImageIO.write(image, "png", outputfile);
 
