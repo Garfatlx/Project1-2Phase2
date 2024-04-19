@@ -9,7 +9,7 @@ public class test {
 
         golfgame g=new golfgame();
         // bot bot=new bot();
-        double[] x={17.0,46.0,4.5,-6};
+        double[] x={17.0,46.0,2,-6};
         double[] a={0.06,0.10};             // a[0] is kenitic friction. a[1] is Static friction
         double dt=0.05;
         double[] hole={33.5,9.97};
