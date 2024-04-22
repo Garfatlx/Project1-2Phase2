@@ -91,7 +91,7 @@ public class golfgame {
         for (int i = 0; i < width-1; i++) {
             for (int j = 0; j < height-1; j++) {
                 for(int k=0;k<2;k++){
-                    gradient[i][j][k]=(double) (255-gAry[i+1-k][j+k]-gAry[i][j])/12.75; //scaled down, if (0-255)/12.75 then (0-20)
+                    gradient[i][j][k]=(double) -(gAry[i+1-k][j+k]-gAry[i][j])/12.75; //scaled down, if (0-255)/12.75 then (0-20)
                 }
             }
         }
@@ -148,7 +148,7 @@ public class golfgame {
 
     private int heightFunction(double x, double y){
         // translate x,y from (0,500) to (-10,10), 
-        int h=(int) (255-(((0.4*(0.9-Math.exp(-(Math.pow(x/50-5, 2)+Math.pow(y/50-5, 2))/8))))*500+25));
+        int h=(int) (255-(((0.4*(0.9-Math.exp(-(Math.pow(x/50-5, 2)+Math.pow(y/50-5, 2))/8))))*200+80));
         
         return h;
     }
