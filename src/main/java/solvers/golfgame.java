@@ -128,17 +128,13 @@ public class golfgame {
         int width= 500;
         int height=500;
         BufferedImage image = null;
-        
 
         try {
-        
             image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-            
             for (int i = 0; i < 500; i++) {
                 for (int j = 0; j < 500; j++) {
                     Color color=new Color(0,heightFunction(i, j),0);
                     image.setRGB(i, j, color.getRGB());
-
                 }
             }
             System.out.println("map created");
@@ -151,7 +147,7 @@ public class golfgame {
     }
 
     private int heightFunction(double x, double y){
-
+        // translate x,y from (0,500) to (-10,10), 
         int h=(int) (255-(((0.4*(0.9-Math.exp(-(Math.pow(x/50-5, 2)+Math.pow(y/50-5, 2))/8))))*500+25));
         
         return h;
