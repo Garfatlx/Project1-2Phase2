@@ -15,11 +15,13 @@ public class test {
         double[] hole={33.5,9.97};
         double r=0.15;
 
-        ArrayList<double[]> xpath=g.shoot(new RK4(), x, a, dt, hole,r,"../map.png");
-        System.out.println(Arrays.toString(xpath.get(0)));
-        g.plotTrajectory("../map.png", "output/outplot.png", xpath);
-        System.out.println(xpath.getLast()[0]+" "+xpath.getLast()[1]);
-        System.out.println(g.getMinDistance());
+        g.createMap("target/classes/createdmap.png");
+
+        // ArrayList<double[]> xpath=g.shoot(new RK4(), x, a, dt, hole,r,"target/classes/map.png");
+        // System.out.println(Arrays.toString(xpath.get(0)));
+        // g.plotTrajectory("target/classes/map.png", "output/outplot.png", xpath);
+        // System.out.println(xpath.getLast()[0]+" "+xpath.getLast()[1]);
+        // System.out.println(g.getMinDistance());
 
 
         // bot.golfbot(new RK4(), x, a, dt, hole,r,"maps/map.png");
