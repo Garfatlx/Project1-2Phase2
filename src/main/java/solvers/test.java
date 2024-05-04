@@ -3,23 +3,35 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import solvers.Aibot.AiBot;
+
 public class test {
     
     public static void main(String[] args) {
-
+        MapHandler map=new MapHandler();
         golfgame g=new golfgame();
         // bot bot=new bot();
-        double[] x={17.0,46.0,2,-6};
+        double[] x={17.0,46.0,5,-6};
         double[] a={0.06,0.10};             // a[0] is kenitic friction. a[1] is Static friction
         double dt=0.05;
         double[] hole={33.5,9.97};
         double r=0.15;
 
-        g.createMap("target/classes/createdmap.png");
+        AiBot bot=new AiBot();
 
-        // ArrayList<double[]> xpath=g.shoot(new RK4(), x, a, dt, hole,r,"target/classes/map.png");
+        
+        // set map path
+        String inputPath="target/classes/createdmap.png";
+        String outputPath="output/outplot.png";
+
+        bot.golfbot(new RK4(), x, a, dt, hole,r,inputPath);
+        
+        // create map by function
+        // map.createMap(inputPath);
+
+        // ArrayList<double[]> xpath=g.shoot(new RK4(), x, a, dt, hole,r,inputPath);
         // System.out.println(Arrays.toString(xpath.get(0)));
-        // g.plotTrajectory("target/classes/map.png", "output/outplot.png", xpath);
+        // map.plotTrajectory(inputPath, outputPath, xpath);
         // System.out.println(xpath.getLast()[0]+" "+xpath.getLast()[1]);
         // System.out.println(g.getMinDistance());
 
