@@ -61,7 +61,7 @@ public class MapHandler {
      * @param plotMap    the output path 
      * @param trajectory the ball trajectory
      */
-    public void plotTrajectory(String sourceMap,String plotMap, ArrayList<double[]> trajectory){
+    public void plotTrajectory(String sourceMap,String plotMap, ArrayList<double[]> trajectory, double[] hole){
         int width = 20;
         int height = 20;
         BufferedImage image = null;
@@ -76,6 +76,7 @@ public class MapHandler {
             for (int i = 0; i < trajectory.size(); i++) {
                 image.setRGB((int) Math.floor(trajectory.get(i)[0]*10), (int) Math.floor(trajectory.get(i)[1]*10), Color.RED.getRGB());
             }
+            image.setRGB((int) Math.floor(hole[0]*10), (int) Math.floor(hole[1]*10), Color.BLACK.getRGB());
             
             File outputfile=new File(plotMap);
             ImageIO.write(image, "png", outputfile);

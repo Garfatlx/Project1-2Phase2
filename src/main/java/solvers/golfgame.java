@@ -14,7 +14,7 @@ public class golfgame {
     private boolean goal=false;
     private double[] minCoordinate=new double[2];
 
-    public ArrayList<double[]> shoot(MySolver solver, double[] x, double[] a, double dt,double[] hole, double r, String mappath){
+    public ArrayList<double[]> shoot(MySolver solver, double[] x, double[] a, double dt,double[] hole, double r, String mappath,Boolean recording){
         ArrayList<double[]> xtrac=new ArrayList<double[]>();
         xtrac.clear();
         xtrac.add(x.clone());
@@ -44,7 +44,9 @@ public class golfgame {
                 this.minDis=dis;
                 this.minCoordinate=x;
             }
-            xtrac.add(x.clone());
+            if (recording) {
+                xtrac.add(x.clone());
+            }
         }
 
         return xtrac;

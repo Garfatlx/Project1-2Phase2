@@ -4,6 +4,7 @@ import solvers.MySolver;
 import solvers.RK4;
 import solvers.golfgame;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -12,6 +13,7 @@ public class AiBot {
     char[] vocab={'0','1'};
     double mutationRate=0.01;
     double[] solution=new double[4];
+    boolean goal=false;
 
     public void golfbot(MySolver solver, double[] x, double[] a, double dt,double[] hole, double r, String mappath){
         
@@ -35,35 +37,44 @@ public class AiBot {
         sort.sort(population);
 
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 500; i++) {
             int[] slcIndex=selection(population);
             crossover(population[slcIndex[0]], population[slcIndex[1]], population);
             population[popSize-1].setFitness(calculateFitness(population[popSize-1], solver, x.clone(), a, dt, hole, r, mappath));
             population[popSize-2].setFitness(calculateFitness(population[popSize-2], solver, x.clone(), a, dt, hole, r, mappath));
+            if (this.goal) {
+                break;
+            }
             sort.sort(population);
+            // System.out.println(population[0].getFitness()+"  "+i);
         }
 
-        for (int i = 0; i < popSize; i++) {
-            // System.out.println(Arrays.toString(population[i].genoToPhenotype()));
-            System.out.println(population[i].getFitness());
+        if (!this.goal) {
+            double[] best=x0;
+            best[2]=population[0].genoToPhenotype()[0];
+            best[3]=population[0].genoToPhenotype()[1];
+            this.solution=best.clone();
         }
+        
     }
     
     double calculateFitness(Individual indi, MySolver solver, double[] x, double[] a, double dt,double[] hole, double r, String mappath){
-        double[] x0=x.clone();
+        
         double ball_hole_distance=Math.sqrt(Math.pow(x[0]-hole[0], 2)+Math.pow(x[1]-hole[1], 2));
         golfgame game=new golfgame();
 
         x[2]=indi.genoToPhenotype()[0];
         x[3]=indi.genoToPhenotype()[1];
-
-        game.shoot(solver, x, a, dt, hole, r, mappath);
+        double[] x0=x.clone();
+        game.shoot(solver, x, a, dt, hole, r, mappath,false);
         if (game.isGoal()) {
             this.solution=x0.clone();
+            this.goal=true;
             System.out.println("Goal!!!!!!!");;
         }
-
-        return -Math.log10((game.getMinDistance()+0.01)/(ball_hole_distance+0.01));
+        double fit=-Math.log10((game.getMinDistance()+0.01)/(ball_hole_distance+0.01));
+        
+        return fit;
     }
 
     int[] selection(Individual[] pop){
@@ -144,6 +155,9 @@ public class AiBot {
             }
 
         }
+    }
+    public double[] getBest(){
+        return this.solution;
     }
 
 }
