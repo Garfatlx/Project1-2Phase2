@@ -21,13 +21,13 @@ public class test {
         String inputPath="target/classes/createdmap.png";
         String outputPath="output/outplot.png";
 
-        GolfGame g=new GolfGame(new RK4(), a, dt, hole,r,inputPath, true);
+        GolfGame g=new GolfGame(new RK4(), a, dt, hole,r,inputPath);
 
         AiBot bot=new AiBot(g);
         bot.golfbot(x);
         System.out.println(Arrays.toString(bot.getBest()));
-
-        ArrayList<double[]> xpath=g.shoot(bot.getBest().clone());
+        
+        ArrayList<double[]> xpath=g.shoot(bot.getBest().clone(),true);
         map.plotTrajectory(inputPath, outputPath, xpath, hole);
         System.out.println(g.getMinDistance());
 

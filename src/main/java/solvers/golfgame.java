@@ -14,20 +14,19 @@ public class GolfGame {
     private double dt;
     private double[] hole;
     private double r;
-    private boolean recording;
     private String mappath;
 
-    public GolfGame(MySolver solver, double[] a, double dt,double[] hole, double r, String mappath,Boolean recording){
+    public GolfGame(MySolver solver, double[] a, double dt,double[] hole, double r, String mappath){
         this.solver=solver;
         this.a=a;
         this.dt=dt;
         this.hole=hole;
         this.r=r;
-        this.recording=recording;
         this.mappath=mappath;
     }
 
-    public ArrayList<double[]> shoot(double[] x){
+
+    public ArrayList<double[]> shoot(double[] x,Boolean recording){
         ArrayList<double[]> xtrac=new ArrayList<double[]>();
         xtrac.clear();
         xtrac.add(x.clone());
@@ -78,6 +77,9 @@ public class GolfGame {
     }
     public double getHoleBallDistance(double[] x){
         return Math.sqrt(Math.pow(x[0]-hole[0], 2)+Math.pow(x[1]-hole[1], 2));
+    }
+    public double[] getHole(){
+        return this.hole;
     }
 
     

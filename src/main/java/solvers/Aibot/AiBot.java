@@ -1,11 +1,7 @@
 package solvers.Aibot;
 
 import solvers.GolfGame;
-import solvers.MySolver;
-import solvers.RK4;
-import solvers.GolfGame;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -25,25 +21,12 @@ public class AiBot {
     public void golfbot(double[] x){
         
         Individual[] population=new Individual[popSize];
-        Random rand=new Random();
         HeapSort sort=new HeapSort();
-        char[][] indi=new char[2][10];
         double[] x0=x.clone();
 
         // initiate population
-
-        for (int i = 0; i < popSize; i++) {
-            for (int j = 0; j < 2; j++) {
-                for(int k=0;k<10;k++){
-                    indi[j][k]=vocab[rand.nextInt(2)];
-                }
-            }
-            population[i]=new Individual(indi);
-
-            population[i].setFitness(calculateFitness(population[i],  x.clone()));
-        }
-        sort.sort(population);
-
+        initialPopulation(population, x0);
+ 
 
         for (int i = 0; i < 700; i++) {
             int[] slcIndex=selection(population);
@@ -66,24 +49,52 @@ public class AiBot {
         
     }
     
-    void initialPopulation(Individual[] pop){
+    void initialPopulation(Individual[] pop, double[] x){
        
-        // Random rand=new Random();
-        // HeapSort sort=new HeapSort();
-        // char[][] indi=new char[2][10];
+        Random rand=new Random();
+        HeapSort sort=new HeapSort();
+        char[][] indi=new char[2][10];
 
-        // // initiate population
-        // for (int i = 0; i < popSize; i++) {
-        //     for (int j = 0; j < 2; j++) {
-        //         for(int k=0;k<10;k++){
-        //             indi[j][k]=vocab[rand.nextInt(2)];
-        //         }
-        //     }
-        //     pop[i]=new Individual(indi);
+        // set 1 try of direct shoot 
+        double[] hole=game.getHole();
+        double cos=(hole[0]-x[0])/game.getHoleBallDistance(x);
+        double sin=(hole[1]-x[1])/game.getHoleBallDistance(x);
 
-        //     pop[i].setFitness(calculateFitness(pop[i], solver, x.clone(), a, dt, hole, r, mappath));
-        // }
-        // sort.sort(population);
+        for (int k = -2; k<3; k++) {
+            char[] vxChrom=Integer.toBinaryString((int)(5*(cos*Math.cos(0.17*k)-sin*Math.sin(0.17*k))*100+500)).toCharArray();
+            char[] vyChrom=Integer.toBinaryString((int)(5*(sin*Math.cos(0.17*k)+cos*Math.sin(0.17*k))*100+500)).toCharArray();
+            for (int i = 0; i <10; i++) {
+                int j=vxChrom.length+i-10;
+                if(j>=0){
+                    indi[0][i]=vxChrom[j];
+                }else{
+                    indi[0][i]='0';
+                }
+                j=vyChrom.length+i-10;
+                if(j>=0){
+                    indi[1][i]=vyChrom[j];
+                }else{
+                    indi[1][i]='0';
+                }  
+            }
+            pop[k+2]=new Individual(indi);
+            pop[k+2].setFitness(calculateFitness(pop[0], x.clone()));
+            System.out.println(Arrays.toString(pop[k+2].genoToPhenotype()));
+        }
+        
+
+        // Random the rest in population
+        for (int i = 5; i < popSize; i++) {
+            for (int j = 0; j < 2; j++) {
+                for(int k=0;k<10;k++){
+                    indi[j][k]=vocab[rand.nextInt(2)];
+                }
+            }
+            pop[i]=new Individual(indi);
+
+            pop[i].setFitness(calculateFitness(pop[i], x.clone()));
+        }
+        sort.sort(pop);
 
     }
 
@@ -94,11 +105,11 @@ public class AiBot {
         x[2]=indi.genoToPhenotype()[0];
         x[3]=indi.genoToPhenotype()[1];
         double[] x0=x.clone();
-        game.shoot(x);
-        if (game.isGoal()) {
+        game.shoot(x,false);
+        if (game.isGoal() && !this.goal) {
             this.solution=x0.clone();
             this.goal=true;
-            System.out.println("Goal!!!!!!!");;
+            System.out.println("Goal!!!!!!!in calcu fitness");;
         }
         double fit=-Math.log10((game.getMinDistance()+0.01)/(ball_hole_distance+0.01));
         
@@ -138,7 +149,6 @@ public class AiBot {
 
     void crossover(Individual slc1, Individual slc2, Individual[] pop){
         Random rnd=new Random();
-        HeapSort sort=new HeapSort();
         int pivot=rnd.nextInt(7)+1;
         Individual child1=slc1.clone();
         Individual child2=slc2.clone();
