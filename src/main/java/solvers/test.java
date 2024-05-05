@@ -10,19 +10,20 @@ public class test {
     public static void main(String[] args) {
         MapHandler map=new MapHandler();
         golfgame g=new golfgame();
-        double[] x={30.0,5.0,5,-6};
+        double[] x={30.0,5.0,-5,-0.45};
         double[] a={0.06,0.10};             // a[0] is kenitic friction. a[1] is Static friction
         double dt=0.05;
-        double[] hole={7,25};
+        double[] hole={15,25};
         double r=0.15;
 
-        AiBot bot=new AiBot();
+        
 
         
         // set map path
         String inputPath="target/classes/createdmap.png";
         String outputPath="output/outplot.png";
 
+        AiBot bot=new AiBot();
         bot.golfbot(new RK4(), x, a, dt, hole,r,inputPath);
         System.out.println(Arrays.toString(bot.getBest()));
 

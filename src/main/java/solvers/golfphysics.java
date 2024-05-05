@@ -11,7 +11,7 @@ public class golfphysics implements MyFunction {
         dx[1]=x[3];
 
         //precise the speed to 0.001 m/s
-        if (x[2]<0.001 && x[3]<0.001) {
+        if (Math.abs(x[2])<0.01 && Math.abs(x[3])<0.01) {
             x[2]=0;
             x[3]=0;
         }

@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class AiBot {
-    int popSize=100;
+    int popSize=20;
     char[] vocab={'0','1'};
     double mutationRate=0.01;
     double[] solution=new double[4];
@@ -37,7 +37,7 @@ public class AiBot {
         sort.sort(population);
 
 
-        for (int i = 0; i < 500; i++) {
+        for (int i = 0; i < 700; i++) {
             int[] slcIndex=selection(population);
             crossover(population[slcIndex[0]], population[slcIndex[1]], population);
             population[popSize-1].setFitness(calculateFitness(population[popSize-1], solver, x.clone(), a, dt, hole, r, mappath));

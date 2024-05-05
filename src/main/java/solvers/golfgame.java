@@ -1,5 +1,6 @@
 package solvers;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -26,7 +27,6 @@ public class golfgame {
         double[][][] mapgradient=map.readmap(mappath);
         this.minDis=getDistance(x, hole);
         double dis=100;
-
         //loop untill ball stop or out of court
         while (!solver.nextstep(golfPhysics,x,a,mapgradient[(int)Math.floor(x[0]*10)][(int)Math.floor(x[1]*10)],dt)) {
             //check whether out of court
