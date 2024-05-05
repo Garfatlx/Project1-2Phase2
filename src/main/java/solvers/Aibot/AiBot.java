@@ -1,8 +1,9 @@
 package solvers.Aibot;
 
+import solvers.GolfGame;
 import solvers.MySolver;
 import solvers.RK4;
-import solvers.golfgame;
+import solvers.GolfGame;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,7 +16,13 @@ public class AiBot {
     double[] solution=new double[4];
     boolean goal=false;
 
-    public void golfbot(MySolver solver, double[] x, double[] a, double dt,double[] hole, double r, String mappath){
+    GolfGame game;
+
+    public AiBot(GolfGame game){
+        this.game=game;
+    }
+
+    public void golfbot(double[] x){
         
         Individual[] population=new Individual[popSize];
         Random rand=new Random();
@@ -24,6 +31,7 @@ public class AiBot {
         double[] x0=x.clone();
 
         // initiate population
+
         for (int i = 0; i < popSize; i++) {
             for (int j = 0; j < 2; j++) {
                 for(int k=0;k<10;k++){
@@ -32,7 +40,7 @@ public class AiBot {
             }
             population[i]=new Individual(indi);
 
-            population[i].setFitness(calculateFitness(population[i], solver, x.clone(), a, dt, hole, r, mappath));
+            population[i].setFitness(calculateFitness(population[i],  x.clone()));
         }
         sort.sort(population);
 
@@ -40,8 +48,8 @@ public class AiBot {
         for (int i = 0; i < 700; i++) {
             int[] slcIndex=selection(population);
             crossover(population[slcIndex[0]], population[slcIndex[1]], population);
-            population[popSize-1].setFitness(calculateFitness(population[popSize-1], solver, x.clone(), a, dt, hole, r, mappath));
-            population[popSize-2].setFitness(calculateFitness(population[popSize-2], solver, x.clone(), a, dt, hole, r, mappath));
+            population[popSize-1].setFitness(calculateFitness(population[popSize-1], x.clone()));
+            population[popSize-2].setFitness(calculateFitness(population[popSize-2], x.clone()));
             if (this.goal) {
                 break;
             }
@@ -58,15 +66,35 @@ public class AiBot {
         
     }
     
-    double calculateFitness(Individual indi, MySolver solver, double[] x, double[] a, double dt,double[] hole, double r, String mappath){
+    void initialPopulation(Individual[] pop){
+       
+        // Random rand=new Random();
+        // HeapSort sort=new HeapSort();
+        // char[][] indi=new char[2][10];
+
+        // // initiate population
+        // for (int i = 0; i < popSize; i++) {
+        //     for (int j = 0; j < 2; j++) {
+        //         for(int k=0;k<10;k++){
+        //             indi[j][k]=vocab[rand.nextInt(2)];
+        //         }
+        //     }
+        //     pop[i]=new Individual(indi);
+
+        //     pop[i].setFitness(calculateFitness(pop[i], solver, x.clone(), a, dt, hole, r, mappath));
+        // }
+        // sort.sort(population);
+
+    }
+
+    double calculateFitness(Individual indi, double[] x){
         
-        double ball_hole_distance=Math.sqrt(Math.pow(x[0]-hole[0], 2)+Math.pow(x[1]-hole[1], 2));
-        golfgame game=new golfgame();
+        double ball_hole_distance=game.getHoleBallDistance(x);
 
         x[2]=indi.genoToPhenotype()[0];
         x[3]=indi.genoToPhenotype()[1];
         double[] x0=x.clone();
-        game.shoot(solver, x, a, dt, hole, r, mappath,false);
+        game.shoot(x);
         if (game.isGoal()) {
             this.solution=x0.clone();
             this.goal=true;

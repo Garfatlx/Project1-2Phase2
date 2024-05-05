@@ -2,20 +2,32 @@ package solvers;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
 
-import javax.imageio.ImageIO;
-import java.awt.Color;
 
-public class golfgame {
+public class GolfGame {
     private double minDis=100;
     private boolean goal=false;
     private double[] minCoordinate=new double[2];
 
-    public ArrayList<double[]> shoot(MySolver solver, double[] x, double[] a, double dt,double[] hole, double r, String mappath,Boolean recording){
+    private MySolver solver;
+    private double[] a;
+    private double dt;
+    private double[] hole;
+    private double r;
+    private boolean recording;
+    private String mappath;
+
+    public GolfGame(MySolver solver, double[] a, double dt,double[] hole, double r, String mappath,Boolean recording){
+        this.solver=solver;
+        this.a=a;
+        this.dt=dt;
+        this.hole=hole;
+        this.r=r;
+        this.recording=recording;
+        this.mappath=mappath;
+    }
+
+    public ArrayList<double[]> shoot(double[] x){
         ArrayList<double[]> xtrac=new ArrayList<double[]>();
         xtrac.clear();
         xtrac.add(x.clone());
@@ -63,6 +75,9 @@ public class golfgame {
     }
     public boolean isGoal(){
         return this.goal;
+    }
+    public double getHoleBallDistance(double[] x){
+        return Math.sqrt(Math.pow(x[0]-hole[0], 2)+Math.pow(x[1]-hole[1], 2));
     }
 
     

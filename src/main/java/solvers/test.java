@@ -9,25 +9,25 @@ public class test {
     
     public static void main(String[] args) {
         MapHandler map=new MapHandler();
-        golfgame g=new golfgame();
+        
         double[] x={30.0,5.0,-5,-0.45};
         double[] a={0.06,0.10};             // a[0] is kenitic friction. a[1] is Static friction
         double dt=0.05;
         double[] hole={15,25};
         double r=0.15;
-
         
-
         
         // set map path
         String inputPath="target/classes/createdmap.png";
         String outputPath="output/outplot.png";
 
-        AiBot bot=new AiBot();
-        bot.golfbot(new RK4(), x, a, dt, hole,r,inputPath);
+        GolfGame g=new GolfGame(new RK4(), a, dt, hole,r,inputPath, true);
+
+        AiBot bot=new AiBot(g);
+        bot.golfbot(x);
         System.out.println(Arrays.toString(bot.getBest()));
 
-        ArrayList<double[]> xpath=g.shoot(new RK4(), bot.getBest().clone(), a, dt, hole,r,inputPath,true);
+        ArrayList<double[]> xpath=g.shoot(bot.getBest().clone());
         map.plotTrajectory(inputPath, outputPath, xpath, hole);
         System.out.println(g.getMinDistance());
 
