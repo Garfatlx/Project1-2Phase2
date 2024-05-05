@@ -7,7 +7,8 @@ import java.util.List;
 public class GolfGame {
     private double minDis=100;
     private boolean goal=false;
-    private double[] minCoordinate=new double[2];
+    private double[] minCoordinate=new double[4];
+    private double[] stopCoordinate=new double[4];
 
     private MySolver solver;
     private double[] a;
@@ -58,6 +59,7 @@ public class GolfGame {
             if (recording) {
                 xtrac.add(x.clone());
             }
+            this.stopCoordinate=x.clone();
         }
 
         return xtrac;
@@ -80,6 +82,9 @@ public class GolfGame {
     }
     public double[] getHole(){
         return this.hole;
+    }
+    public double[] getStoppoint(){
+        return this.stopCoordinate;
     }
 
     
