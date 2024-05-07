@@ -84,29 +84,61 @@ public class GolfGame {
     }
 
     /**
+     * get the distance between two points
      * 
-     * @param src
-     * @param des
-     * @return
+     * @param src   one of the point. Only read the src[0] and src[1] as coordination. 
+     * @param des   the other point.
+     * @return      the distance
      */
     public double getDistance (double[] src, double[] des){
         return Math.sqrt(Math.pow(des[0]-src[0], 2)+Math.pow(des[1]-src[1], 2));
     }
+
+    /**
+     * 
+     * @return  the miminal distance throughout the whole trajectory
+     */
     public double getMinDistance(){
         return this.minDis;
     }
+
+    /**
+     * 
+     * @return  the nearst point
+     */
     public double[] getMinCoordinate(){
         return this.minCoordinate;
     }
+
+    /**
+     * 
+     * @return  whether goaled in this shot
+     */
     public boolean isGoal(){
         return this.goal;
     }
+
+    /**
+     * 
+     * @param x     the coordination of the ball
+     * @return      the distance between the ball and the hole
+     */
     public double getHoleBallDistance(double[] x){
         return Math.sqrt(Math.pow(x[0]-hole[0], 2)+Math.pow(x[1]-hole[1], 2));
     }
+
+    /**
+     * 
+     * @return      the position of the ball
+     */
     public double[] getHole(){
         return this.hole;
     }
+
+    /**
+     * 
+     * @return      the ball stop position
+     */
     public double[] getStoppoint(){
         return this.stopCoordinate;
     }
