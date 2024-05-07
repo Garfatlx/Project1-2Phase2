@@ -6,15 +6,18 @@ import java.util.HashMap;
 import solvers.Aibot.AiBot;
 
 public class test {
-    
+    /**
+     * 
+     * @param args
+     */
     public static void main(String[] args) {
         MapHandler map=new MapHandler();
         
         double[] x={30.0,5.0,-5,-0.45};
         double[] a={0.06,0.10};             // a[0] is kenitic friction. a[1] is Static friction
         double dt=0.05;
-        double[] hole={15,25};
-        double r=0.15;
+        double[] hole={10,25};
+        double r=0.2;
         
         
         // set map path

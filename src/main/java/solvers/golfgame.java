@@ -3,7 +3,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
+/** 
+ * The main engine
+*/
 public class GolfGame {
     private double minDis=100;
     private boolean goal=false;
@@ -17,6 +19,16 @@ public class GolfGame {
     private double r;
     private String mappath;
 
+    /**
+     * Construct the game engine
+     * 
+     * @param solver    ODE sovler
+     * @param a         friction coefficients, [knetic fraction, static friction]
+     * @param dt        time step
+     * @param hole      position of the hole
+     * @param r         radius of the hole
+     * @param mappath   the path of the map
+     */
     public GolfGame(MySolver solver, double[] a, double dt,double[] hole, double r, String mappath){
         this.solver=solver;
         this.a=a;
@@ -26,7 +38,13 @@ public class GolfGame {
         this.mappath=mappath;
     }
 
-
+    /**
+     * shoot!
+     * 
+     * @param x             the starting position and velocity of the ball
+     * @param recording     whether save the trajectory. Disable recording in AI bot calculation to save memory. 
+     * @return              The trajectory of the ball. It is null if recording is false.
+     */
     public ArrayList<double[]> shoot(double[] x,Boolean recording){
         ArrayList<double[]> xtrac=new ArrayList<double[]>();
         xtrac.clear();
@@ -65,6 +83,12 @@ public class GolfGame {
         return xtrac;
     }
 
+    /**
+     * 
+     * @param src
+     * @param des
+     * @return
+     */
     public double getDistance (double[] src, double[] des){
         return Math.sqrt(Math.pow(des[0]-src[0], 2)+Math.pow(des[1]-src[1], 2));
     }
