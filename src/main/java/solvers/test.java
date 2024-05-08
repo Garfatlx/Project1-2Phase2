@@ -21,7 +21,7 @@ public class test {
         
         
         // set map path
-        String inputPath="target/classes/createdmap.png";
+        String inputPath="target/classes/map.png";
         String outputPath="output/outplot.png";
 
         GolfGame g=new GolfGame(new RK4(), a, dt, hole,r,inputPath);

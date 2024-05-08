@@ -79,10 +79,8 @@ public class GolfGame {
             }
             this.stopCoordinate=x.clone();
         }
-
         return xtrac;
     }
-
     /**
      * get the distance between two points
      * 
