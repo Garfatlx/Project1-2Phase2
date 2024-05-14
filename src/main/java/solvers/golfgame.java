@@ -34,6 +34,7 @@ public class GolfGame {
         this.a=a;
         this.dt=dt;
         this.hole=hole;
+        Utility.coordinateConvertor(this.hole);
         this.r=r;
         this.mappath=mappath;
     }
@@ -46,6 +47,8 @@ public class GolfGame {
      * @return              The trajectory of the ball. It is null if recording is false.
      */
     public ArrayList<double[]> shoot(double[] x,Boolean recording){
+        // cooridnateConvertor(x);
+        Utility.coordinateConvertor(x);
         ArrayList<double[]> xtrac=new ArrayList<double[]>();
         xtrac.clear();
         xtrac.add(x.clone());
@@ -63,7 +66,7 @@ public class GolfGame {
             if ((int)Math.floor(x[0]*10)>=mapgradient.length || (int)Math.floor(x[1]*10)>=mapgradient.length || (int)Math.floor(x[0]*10) <0 || (int)Math.floor(x[1]*10)<0) {
                 break;
             }
-            dis=getDistance(x, hole);
+            dis=getDistance(x, this.hole);
             if(dis<r){
                 System.out.println("Goal!!!");
                 this.minDis=0;
@@ -141,5 +144,6 @@ public class GolfGame {
         return this.stopCoordinate;
     }
 
+    
     
 }

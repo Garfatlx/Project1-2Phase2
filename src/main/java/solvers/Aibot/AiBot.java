@@ -1,25 +1,25 @@
 package solvers.Aibot;
 
 import solvers.GolfGame;
+import solvers.Utility;
 
 import java.util.Arrays;
 import java.util.Random;
 
 public class AiBot {
-    int popSize=20;
-    char[] vocab={'0','1'};
-    double mutationRate=0.01;
-    double[] solution=new double[4];
-    boolean goal=false;
+    private int popSize=20;
+    private char[] vocab={'0','1'};
+    private double mutationRate=0.01;
+    private double[] solution=new double[4];
+    private boolean goal=false;
 
-    GolfGame game;
+    private GolfGame game;
 
     public AiBot(GolfGame game){
         this.game=game;
     }
 
     public void golfbot(double[] x){
-        
         Individual[] population=new Individual[popSize];
         HeapSort sort=new HeapSort();
         double[] x0=x.clone();
@@ -56,7 +56,8 @@ public class AiBot {
         char[][] indi=new char[2][10];
 
         // set 1 try of direct shoot 
-        double[] hole=game.getHole();
+        double[] hole=game.getHole().clone();
+        Utility.reverseCovertor(hole);
         double cos=(hole[0]-x[0])/game.getHoleBallDistance(x);
         double sin=(hole[1]-x[1])/game.getHoleBallDistance(x);
 
