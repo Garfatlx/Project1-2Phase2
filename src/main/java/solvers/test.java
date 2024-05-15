@@ -24,20 +24,20 @@ public class test {
         String inputPath="target/classes/createdmap.png";
         String outputPath="output/outplot.png";
 
-        GolfGame g=new GolfGame(new RK4(), a, dt, hole,r,inputPath);
+        // GolfGame g=new GolfGame(new RK4(), a, dt, hole,r,inputPath);
 
-        AiBot bot=new AiBot(g);
-        bot.golfbot(x);
-        System.out.println(Arrays.toString(bot.getBest()));
-        ArrayList<double[]> xpath=g.shoot(bot.getBest().clone(),true);
+        // AiBot bot=new AiBot(g);
+        // bot.golfbot(x);
+        // System.out.println(Arrays.toString(bot.getBest()));
+        // ArrayList<double[]> xpath=g.shoot(bot.getBest().clone(),true);
 
-        // ArrayList<double[]> xpath=g.shoot(x,true);
+        // // ArrayList<double[]> xpath=g.shoot(x,true);
         
-        map.plotTrajectory(inputPath, outputPath, xpath, hole);
-        System.out.println(g.getMinDistance());
+        // map.plotTrajectory(inputPath, outputPath, xpath, hole);
+        // System.out.println(g.getMinDistance());
 
         // create map by function
-        // map.createMap(inputPath);
+        map.createMap(inputPath);
 
         // ArrayList<double[]> xpath=g.shoot(new RK4(), x, a, dt, hole,r,inputPath);
         // System.out.println(Arrays.toString(xpath.get(0)));

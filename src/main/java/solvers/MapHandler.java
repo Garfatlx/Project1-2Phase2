@@ -117,7 +117,7 @@ public class MapHandler {
 
     private int heightFunction(double x, double y){
         // translate x,y from (0,500) to (-10,10), 
-        int h=(int) (255-(((0.4*(0.9-Math.exp(-(Math.pow(x/50-5, 2)+Math.pow(y/50-5, 2))/8))))*200+80));
+        int h=(int) (-((0.4*(0.9-Math.exp(-(Math.pow(x/50-5, 2)+Math.pow(y/50-5, 2))/8))))*100+125);
 
 
         // String func = "255 - ((0.4 * (0.9 - e^(-(((x / 50 - 5)^2 + (y / 50 - 5)^2) / 8)))) * 200 + 80)";
