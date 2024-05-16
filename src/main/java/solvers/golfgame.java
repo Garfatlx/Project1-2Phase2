@@ -1,7 +1,9 @@
 package solvers;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /** 
  * The main engine
@@ -57,7 +59,10 @@ public class GolfGame {
         
         
         //Read the map, store the gradient 
-        double[][][] mapgradient=map.readmap(mappath);
+        map.readmap(mappath);
+        double[][][] mapgradient=map.getGradient();
+        int[][] redElm=map.getRed();
+        int[][] blueElm=map.getBlue();
         this.minDis=getDistance(x, hole);
         double dis=100;
         //loop untill ball stop or out of court
@@ -81,6 +86,11 @@ public class GolfGame {
                 xtrac.add(x.clone());
             }
             this.stopCoordinate=x.clone();
+            // bouncing with tree
+            if (blueElm[(int)Math.floor(x[0]*10)][(int)Math.floor(x[1]*10)]>=30 && redElm[(int)Math.floor(x[0]*10)][(int)Math.floor(x[1]*10)]>=30) {
+                
+            }
+
         }
         return xtrac;
     }
@@ -144,6 +154,38 @@ public class GolfGame {
         return this.stopCoordinate;
     }
 
-    
+    public void findTreeCenter(int x, int y,int[][] matrix ){
+        Set<Integer> xSet=new HashSet<>();
+        Set<Integer> ySet=new HashSet<>();
+        findTree(x, y, xSet, ySet, matrix);
+        int xSum=0;
+        for (Integer i : xSet) {
+            xSum=xSum+i;
+        }
+        int ySum=0;
+        for (Integer i : ySet) {
+            ySum=ySum+i;
+        }
+        int xCenter=(int) xSum/xSet.size();
+        int yCenter=(int) ySum/ySet.size();
+        System.out.println(xCenter + "  "+ yCenter);
+    }
+    public void findTree(int x, int y, Set<Integer> xSet, Set<Integer> ySet,int[][] matrix){
+        if (xSet.contains(x) && ySet.contains(y)) {
+            return;
+        }
+        if (matrix[x][y]>20) {
+            xSet.add(x);
+            ySet.add(y);
+            findTree(x-1, y, xSet, ySet, matrix);
+            findTree(x, y-1, xSet, ySet, matrix);
+            findTree(x+1, y, xSet, ySet, matrix);
+            findTree(x, y+1, xSet, ySet, matrix);
+        }else{
+            return;
+        }
+    }
+
+
     
 }

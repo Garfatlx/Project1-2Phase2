@@ -11,13 +11,17 @@ import javax.imageio.ImageIO;
 import java.awt.Color;
 
 public class MapHandler {
+    private int[][] redAry;
+    private int[][] blueAry;
+    private double[][][] gradient;
+
     /**
      * Read the map and store the gradient.
      *
      * @param mappath the dir path
      * @return the gradient array double [ ] [ ] [ ]
      */
-    public double[][][] readmap(String mappath){
+    public void readmap(String mappath){
         int width = 20;
         int height = 20;
         BufferedImage image = null;
@@ -33,16 +37,18 @@ public class MapHandler {
             System.out.println("Error: " + e);
         }
         int[][] gAry=new int[width][height];
+        redAry=new int[width][height];
+        blueAry=new int[width][height];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 int rgb = image.getRGB(i, j); // Get the RGB value at a specific pixel
-                int r = (rgb >> 16) & 0xFF;   // Red component, Red is the friction, 0-255
+                redAry[i][j] = (rgb >> 16) & 0xFF;   // Red component, Red is the friction, 0-255
                 gAry[i][j] = (rgb >> 8) & 0xFF;    // Green component, Green is the height, 0-255. 
-                int b = rgb & 0xFF; 
+                blueAry[i][j] = rgb & 0xFF; 
             }
         }
 
-        double[][][] gradient=new double[width][height][2];
+        gradient=new double[width][height][2];
         for (int i = 0; i < width-1; i++) {
             for (int j = 0; j < height-1; j++) {
                 for(int k=0;k<2;k++){
@@ -50,10 +56,16 @@ public class MapHandler {
                 }
             }
         }
-        return gradient;
-        
     }
-
+    public int[][] getRed(){
+        return this.redAry;
+    }
+    public int[][] getBlue(){
+        return this.blueAry;
+    }
+    public double[][][] getGradient(){
+        return this.gradient;
+    }
     /**
      * Plot trajectory.
      *
@@ -117,7 +129,8 @@ public class MapHandler {
 
     private int heightFunction(double x, double y){
         // translate x,y from (0,500) to (-10,10), 
-        int h=(int) (-((0.4*(0.9-Math.exp(-(Math.pow(x/50-5, 2)+Math.pow(y/50-5, 2))/8))))*100+125);
+        // int h=(int) (-((0.4*(0.9-Math.exp(-(Math.pow(x/10-25, 2)+Math.pow(y/10-25, 2))/8))))*120+125);
+        int h=(int) ((Math.sin(x/10+y/10-50)+0.5)*10+125);
 
 
         // String func = "255 - ((0.4 * (0.9 - e^(-(((x / 50 - 5)^2 + (y / 50 - 5)^2) / 8)))) * 200 + 80)";
