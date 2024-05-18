@@ -59,11 +59,8 @@ public class AiBot {
 
         // set 1 try of direct shoot 
         double[] hole=game.getHole().clone();
-        Utility.reverseCovertor(hole);
-        double[] xt=x.clone();
-        Utility.coordinateConvertor(xt);
-        double cos=(hole[0]-x[0])/game.getHoleBallDistance(xt);
-        double sin=(hole[1]-x[1])/game.getHoleBallDistance(xt);
+        double cos=(hole[0]-x[0])/game.getHoleBallDistance(x);
+        double sin=(hole[1]-x[1])/game.getHoleBallDistance(x);
 
         for (int k = -2; k<3; k++) {
             char[] vxChrom=Integer.toBinaryString((int)(5*(cos*Math.cos(0.17*k)-sin*Math.sin(0.17*k))*100+500)).toCharArray();

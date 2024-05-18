@@ -36,7 +36,6 @@ public class GolfGame {
         this.a=a;
         this.dt=dt;
         this.hole=hole;
-        Utility.coordinateConvertor(this.hole);
         this.r=r;
         this.mappath=mappath;
     }
@@ -49,8 +48,7 @@ public class GolfGame {
      * @return              The trajectory of the ball. It is null if recording is false.
      */
     public ArrayList<double[]> shoot(double[] x,Boolean recording){
-        // cooridnateConvertor(x);
-        Utility.coordinateConvertor(x);
+        
         ArrayList<double[]> xtrac=new ArrayList<double[]>();
         xtrac.clear();
         xtrac.add(x.clone());
@@ -66,9 +64,10 @@ public class GolfGame {
         this.minDis=getDistance(x, hole);
         double dis=100;
         //loop untill ball stop or out of court
-        while (!solver.nextstep(golfPhysics,x,a,mapgradient[(int)Math.floor(x[0]*10)][(int)Math.floor(x[1]*10)],dt)) {
+        while (!solver.nextstep(golfPhysics,x,a,mapgradient[Utility.coordinateToPixel_X(x[0])][Utility.coordinateToPixel_Y(x[1])],dt)) {
             //check whether out of court
-            if ((int)Math.floor(x[0]*10)>=mapgradient.length || (int)Math.floor(x[1]*10)>=mapgradient.length || (int)Math.floor(x[0]*10) <0 || (int)Math.floor(x[1]*10)<0) {
+            if (Utility.coordinateToPixel_X(x[0])>=mapgradient.length || Utility.coordinateToPixel_Y(x[1])>=mapgradient[0].length 
+                    || Utility.coordinateToPixel_X(x[0])<0 || Utility.coordinateToPixel_Y(x[1])<0) {
                 break;
             }
             dis=getDistance(x, this.hole);
@@ -87,7 +86,8 @@ public class GolfGame {
             }
             this.stopCoordinate=x.clone();
             // bouncing with tree
-            if (blueElm[(int)Math.floor(x[0]*10)][(int)Math.floor(x[1]*10)]>=30 && redElm[(int)Math.floor(x[0]*10)][(int)Math.floor(x[1]*10)]>=30) {
+            if (blueElm[Utility.coordinateToPixel_X(x[0])][Utility.coordinateToPixel_Y(x[1])]>=30 
+                    && redElm[Utility.coordinateToPixel_X(x[0])][Utility.coordinateToPixel_Y(x[1])]>=30) {
                 
             }
 

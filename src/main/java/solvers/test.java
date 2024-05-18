@@ -13,7 +13,7 @@ public class test {
     public static void main(String[] args) {
         MapHandler map=new MapHandler();
         
-        double[] x={10,2,-5,-0.45};
+        double[] x={10,2,-2,-4};
         double[] a={0.06,0.10};             // a[0] is kenitic friction. a[1] is Static friction
         double dt=0.05;
         double[] hole={-5,-10};
@@ -21,24 +21,24 @@ public class test {
         
         
         // set map path
-        String inputPath="target/classes/plain.png";
-        String outputPath="output/outplot.png";
+        String inputPath="target/classes/mapmodified.jpeg";
+        String outputPath="output/outplot1.png";
 
         GolfGame g=new GolfGame(new RK4(), a, dt, hole,r,inputPath);
 
-        map.readmap(inputPath);
-        int[][] m=map.getBlue();
-        g.findTreeCenter(200, 220, m);
+        // map.readmap(inputPath);
+        // int[][] m=map.getBlue();
+        // g.findTreeCenter(200, 220, m);
 
         // AiBot bot=new AiBot(g);
         // bot.golfbot(x);
         // System.out.println(Arrays.toString(bot.getBest()));
         // ArrayList<double[]> xpath=g.shoot(bot.getBest().clone(),true);
 
-        // // ArrayList<double[]> xpath=g.shoot(x,true);
+        ArrayList<double[]> xpath=g.shoot(x,true);
         
-        // map.plotTrajectory(inputPath, outputPath, xpath, hole);
-        // System.out.println(g.getMinDistance());
+        map.plotTrajectory(inputPath, outputPath, xpath, hole);
+        System.out.println(g.getMinDistance());
 
         // create map by function
         // map.createMap(inputPath);

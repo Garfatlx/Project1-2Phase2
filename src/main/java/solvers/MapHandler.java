@@ -52,7 +52,7 @@ public class MapHandler {
         for (int i = 0; i < width-1; i++) {
             for (int j = 0; j < height-1; j++) {
                 for(int k=0;k<2;k++){
-                    gradient[i][j][k]=(double) -(gAry[i+1-k][j+k]-gAry[i][j])/12.75; //scaled down, if (0-255)/12.75 then (0-20)
+                    gradient[i][j][k]=Utility.colorToHeight(gAry[i+1-k][j+k])-Utility.colorToHeight(gAry[i][j]); //scaled down, if (0-255)/12.75 then (0-20)
                 }
             }
         }
@@ -86,9 +86,9 @@ public class MapHandler {
             height=image.getHeight();
             System.out.println("map readed to plot");
             for (int i = 0; i < trajectory.size(); i++) {
-                image.setRGB((int) Math.floor(trajectory.get(i)[0]*10), (int) Math.floor(trajectory.get(i)[1]*10), Color.RED.getRGB());
+                image.setRGB(Utility.coordinateToPixel_X(trajectory.get(i)[0]), Utility.coordinateToPixel_Y(trajectory.get(i)[1]), Color.RED.getRGB());
             }
-            image.setRGB((int) Math.floor(hole[0]*10), (int) Math.floor(hole[1]*10), Color.BLACK.getRGB());
+            image.setRGB(Utility.coordinateToPixel_X(hole[0]), Utility.coordinateToPixel_Y(hole[1]), Color.BLACK.getRGB());
             
             File outputfile=new File(plotMap);
             ImageIO.write(image, "png", outputfile);
@@ -114,7 +114,7 @@ public class MapHandler {
             image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
             for (int i = 0; i < 500; i++) {
                 for (int j = 0; j < 500; j++) {
-                    Color color=new Color(0,heightFunction(i, j),0);
+                    Color color=new Color(0,Utility.heightToColor(heightFunction(Utility.pixelToCoordinate_X(i), Utility.pixelToCoordinate_Y(j))),0);
                     image.setRGB(i, j, color.getRGB());
                 }
             }
@@ -127,18 +127,12 @@ public class MapHandler {
         }
     }
 
-    private int heightFunction(double x, double y){
+    private double heightFunction(double x, double y){
         // translate x,y from (0,500) to (-10,10), 
         // int h=(int) (-((0.4*(0.9-Math.exp(-(Math.pow(x/10-25, 2)+Math.pow(y/10-25, 2))/8))))*120+125);
-        int h=(int) ((Math.sin(x/10+y/10-50)+0.5)*10+125);
+        double h=Math.sin(x+y)+0.5;
 
 
-        // String func = "255 - ((0.4 * (0.9 - e^(-(((x / 50 - 5)^2 + (y / 50 - 5)^2) / 8)))) * 200 + 80)";
-        // Map<String, Double> initVars = new HashMap<>();
-        // initVars.put("x", x);
-        // initVars.put("y", y);
-        // ExpressionParser parser = new ExpressionParser(func, initVars);
-        
         return h;
     }
 }
