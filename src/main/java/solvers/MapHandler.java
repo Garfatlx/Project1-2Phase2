@@ -1,5 +1,7 @@
 package solvers;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -7,6 +9,7 @@ import java.io.OutputStream;
 
 import javax.imageio.ImageIO;
 
+import parser.ExpressionParser;
 
 import java.awt.Color;
 
@@ -132,7 +135,16 @@ public class MapHandler {
         // int h=(int) (-((0.4*(0.9-Math.exp(-(Math.pow(x/10-25, 2)+Math.pow(y/10-25, 2))/8))))*120+125);
         double h=Math.sin(x+y)+0.5;
 
+        String func = "sin(x+y)+0.5";
+        Map<String, Double> initVars = new HashMap<>();
+        initVars.put("x", x);
+        initVars.put("y", y);
+        ExpressionParser parser = new ExpressionParser(func, initVars);
+        
+        return (int) parser.evaluate();
+        
+        
 
-        return h;
+        
     }
 }

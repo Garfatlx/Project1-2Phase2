@@ -64,10 +64,13 @@ public class GolfGame {
         this.minDis=getDistance(x, hole);
         double dis=100;
         //loop untill ball stop or out of court
-        while (!solver.nextstep(golfPhysics,x,a,mapgradient[Utility.coordinateToPixel_X(x[0])][Utility.coordinateToPixel_Y(x[1])],dt)) {
+        int pixelX=Utility.coordinateToPixel_X(x[0]);
+        int pixelY=Utility.coordinateToPixel_Y(x[1]);
+        while (!solver.nextstep(golfPhysics,x,a,mapgradient[pixelX][pixelY],dt)) {
+            pixelX=Utility.coordinateToPixel_X(x[0]);
+            pixelY=Utility.coordinateToPixel_Y(x[1]);
             //check whether out of court
-            if (Utility.coordinateToPixel_X(x[0])>=mapgradient.length || Utility.coordinateToPixel_Y(x[1])>=mapgradient[0].length 
-                    || Utility.coordinateToPixel_X(x[0])<0 || Utility.coordinateToPixel_Y(x[1])<0) {
+            if (pixelX>=mapgradient.length || pixelY>=mapgradient[0].length || pixelX<0 || pixelY<0) {
                 break;
             }
             dis=getDistance(x, this.hole);
@@ -86,8 +89,8 @@ public class GolfGame {
             }
             this.stopCoordinate=x.clone();
             // bouncing with tree
-            if (blueElm[Utility.coordinateToPixel_X(x[0])][Utility.coordinateToPixel_Y(x[1])]>=30 
-                    && redElm[Utility.coordinateToPixel_X(x[0])][Utility.coordinateToPixel_Y(x[1])]>=30) {
+            if (blueElm[pixelX][pixelY]>=30 
+                    && redElm[pixelX][pixelY]>=30) {
                 
             }
 
