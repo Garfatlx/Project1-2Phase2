@@ -13,8 +13,8 @@ public class test {
     public static void main(String[] args) {
         MapHandler map=new MapHandler();
         
-        double[] x={10,2,-2,-4};
-        double[] a={0.06,0.10};             // a[0] is kenitic friction. a[1] is Static friction
+        double[] x={10,2,2,-3};
+        double[] a={0.09,0.15};             // a[0] is kenitic friction. a[1] is Static friction
         double dt=0.05;
         double[] hole={-5,-10};
         double r=0.2;
@@ -35,13 +35,13 @@ public class test {
         // System.out.println(Arrays.toString(bot.getBest()));
         // ArrayList<double[]> xpath=g.shoot(bot.getBest().clone(),true);
 
-        // ArrayList<double[]> xpath=g.shoot(x,true);
+        ArrayList<double[]> xpath=g.shoot(x,true);
         
-        // map.plotTrajectory(inputPath, outputPath, xpath, hole);
-        // System.out.println(g.getMinDistance());
+        map.plotTrajectory(inputPath, outputPath, xpath, hole);
+        System.out.println(g.getMinDistance());
 
         // create map by function
-        map.createMap(inputPath);
+        // map.createMap(inputPath);
 
         // ArrayList<double[]> xpath=g.shoot(new RK4(), x, a, dt, hole,r,inputPath);
         // System.out.println(Arrays.toString(xpath.get(0)));
